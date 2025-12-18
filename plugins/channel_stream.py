@@ -46,7 +46,7 @@ async def channel_receive_handler(bot: Client, broadcast: Message):
             text=f"**Channel Name:** `{broadcast.chat.title}`\n**CHANNEL ID:** `{broadcast.chat.id}`\n**Rᴇǫᴜᴇsᴛ ᴜʀʟ:** {stream}",
             quote=True
         )
-        new_caption = CHANNEL_FILE_CAPTION.format(CHANNEL, file_name)
+        new_caption = CHANNEL_FILE_CAPTION.format(CHANNEL, file_caption}
         buttons_list = [
             [InlineKeyboardButton("• ꜱᴛʀᴇᴀᴍ •", url=stream),
              InlineKeyboardButton("• ᴅᴏᴡɴʟᴏᴀᴅ •", url=download)],
