@@ -29,7 +29,7 @@ async def channel_receive_handler(bot: Client, broadcast: Message):
                 await bot.leave_chat(chat_id)
                 return
         file = broadcast.document or broadcast.video
-        File_Caption = file.File_Caption if file else "Unknown File"
+        file_name = file.file_name if file else "file_caption"
         msg = await broadcast.forward(chat_id=BIN_CHANNEL)
         raw_stream = f"{URL}watch/{msg.id}/avbotz.mkv?hash={get_hash(msg)}"
         raw_download = f"{URL}{msg.id}?hash={get_hash(msg)}"
@@ -46,7 +46,7 @@ async def channel_receive_handler(bot: Client, broadcast: Message):
             text=f"**Channel Name:** `{broadcast.chat.title}`\n**CHANNEL ID:** `{broadcast.chat.id}`\n**Rᴇǫᴜᴇsᴛ ᴜʀʟ:** {stream}",
             quote=True
         )
-        new_caption = CHANNEL_FILE_CAPTION.format(CHANNEL, File_Caption)
+        new_caption = CHANNEL_FILE_CAPTION.format(CHANNEL, file_caption)
         buttons_list = [
             [InlineKeyboardButton("• ꜱᴛʀᴇᴀᴍ •", url=stream),
              InlineKeyboardButton("• ᴅᴏᴡɴʟᴏᴀᴅ •", url=download)],
