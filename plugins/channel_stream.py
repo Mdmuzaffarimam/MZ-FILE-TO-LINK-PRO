@@ -46,7 +46,6 @@ async def channel_receive_handler(bot: Client, broadcast: Message):
             text=f"**Channel Name:** `{broadcast.chat.title}`\n**CHANNEL ID:** `{broadcast.chat.id}`\n**Rᴇǫᴜᴇsᴛ ᴜʀʟ:** {stream}",
             quote=True
         )
-        new_caption = CHANNEL_FILE_CAPTION.format(CHANNEL, file_caption}
         buttons_list = [
             [InlineKeyboardButton("• ꜱᴛʀᴇᴀᴍ •", url=stream),
              InlineKeyboardButton("• ᴅᴏᴡɴʟᴏᴀᴅ •", url=download)],
@@ -57,12 +56,10 @@ async def channel_receive_handler(bot: Client, broadcast: Message):
                 InlineKeyboardButton("• ʜᴏᴡ ᴛᴏ ᴏᴘᴇɴ •", url=HOW_TO_OPEN)
             ])
         buttons = InlineKeyboardMarkup(buttons_list)
-        await bot.edit_message_caption(
-            chat_id=broadcast.chat.id,
-            message_id=broadcast.id,
-            caption=new_caption,
-            reply_markup=buttons,
-            parse_mode=enums.ParseMode.HTML
+        await bot.edit_message_reply_markup(
+            chat_id=message.chat.id,
+            message_id=message.id,
+            reply_markup=buttons
         )
 
     except asyncio.exceptions.TimeoutError:
