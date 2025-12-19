@@ -29,7 +29,7 @@ async def channel_receive_handler(bot: Client, broadcast: Message):
                 await bot.leave_chat(chat_id)
                 return
         file = broadcast.document or broadcast.video
-        file_name = file.file_name if file else "Unknown File"
+        File_Caption = file.File_Caption if file else "Unknown File"
         msg = await broadcast.forward(chat_id=BIN_CHANNEL)
         raw_stream = f"{URL}watch/{msg.id}/avbotz.mkv?hash={get_hash(msg)}"
         raw_download = f"{URL}{msg.id}?hash={get_hash(msg)}"
@@ -46,6 +46,7 @@ async def channel_receive_handler(bot: Client, broadcast: Message):
             text=f"**Channel Name:** `{broadcast.chat.title}`\n**CHANNEL ID:** `{broadcast.chat.id}`\n**Rᴇǫᴜᴇsᴛ ᴜʀʟ:** {stream}",
             quote=True
         )
+        new_caption = CHANNEL_FILE_CAPTION.format(CHANNEL, File_Caption)
         buttons_list = [
             [InlineKeyboardButton("• ꜱᴛʀᴇᴀᴍ •", url=stream),
              InlineKeyboardButton("• ᴅᴏᴡɴʟᴏᴀᴅ •", url=download)],
@@ -56,10 +57,12 @@ async def channel_receive_handler(bot: Client, broadcast: Message):
                 InlineKeyboardButton("• ʜᴏᴡ ᴛᴏ ᴏᴘᴇɴ •", url=HOW_TO_OPEN)
             ])
         buttons = InlineKeyboardMarkup(buttons_list)
-        await bot.edit_message_reply_markup(
-            chat_id=message.chat.id,
-            message_id=message.id,
-            reply_markup=buttons
+        await bot.edit_message_caption(
+            chat_id=broadcast.chat.id,
+            message_id=broadcast.id,
+            caption=new_caption,
+            reply_markup=buttons,
+            parse_mode=enums.ParseMode.HTML
         )
 
     except asyncio.exceptions.TimeoutError:
